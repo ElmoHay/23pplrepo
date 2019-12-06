@@ -1,12 +1,14 @@
 package com.example._23people.demo23ppl.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.example._23people.demo23ppl.services.StudentService;
-
-
+import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
+@RequestMapping("students/")
 public class StudentController
 {
-    
+    // TODO:  
     @Autowired
     private StudentService studentService;
 
@@ -37,14 +41,20 @@ public class StudentController
     }
 
     // TODO: replace the call to use PagingAndSortingRepository, delete the route param's ...
-    @GetMapping(path = "/page/{pageNumber}/size/{pageSize}")
-    public @ResponseBody Iterable<Student> getAllStudentsPaginate(@PathVariable("pageNumber") Long pageNumber, 
-    @PathVariable("pageSize") Long pageSize){
+    @GetMapping(path = "/paginated")
+    public @ResponseBody Iterable<Student> getAllStudentsPaginate(@RequestParam("pageNumber") Long pageNumber, 
+    @RequestParam("pageSize") Long pageSize){
         return studentService.getAllStudentsPaginate(pageNumber, pageSize);
     }
+    //TODO: () fix this try-catch block: handle this ResponseStatusException correctly 
     @GetMapping(path = "/{entryID}")
-    public ResponseEntity<Student> getStudentByID(@PathVariable("entryID") Long entryID){
-        return studentService.getStudentByID(entryID);
+    public Student getStudentByID(@PathVariable("entryID") Long entryID){
+        try {
+            return studentService.getStudentByID(entryID);
+        } catch(ResponseStatusException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+        }
+        
     }
 
     @PostMapping(path = "/")

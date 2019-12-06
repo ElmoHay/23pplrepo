@@ -3,6 +3,7 @@ package com.example._23people.demo23ppl.services;
 import java.net.URI;
 import java.util.Optional;
 
+import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
 import com.example._23people.demo23ppl.repositories.StudentRepository;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
@@ -33,12 +35,14 @@ public class StudentService
         return page.getContent();
     }
 
-    public ResponseEntity<Student> getStudentByID(Long entryID){
+    public Student getStudentByID(Long entryID) throws ResponseStatusException {
+
         Optional<Student> studentOptional = studentRepository.findById(entryID);
-        if(!studentOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(studentOptional.get());
+
+        //if(!studentOptional.isPresent()) {
+        //    return ResponseEntity.notFound().build();
+        //}
+        return studentOptional.get();
     }
 
     public ResponseEntity<Object> createStudent(Student student){
