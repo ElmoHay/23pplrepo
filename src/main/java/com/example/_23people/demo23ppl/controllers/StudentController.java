@@ -40,21 +40,21 @@ public class StudentController
         return studentService.getAllStudents();
     }
 
-    // TODO: replace the call to use PagingAndSortingRepository, delete the route param's ...
+    
     @GetMapping(path = "/paginated")
     public @ResponseBody Iterable<Student> getAllStudentsPaginate(@RequestParam("pageNumber") Long pageNumber, 
     @RequestParam("pageSize") Long pageSize){
         return studentService.getAllStudentsPaginate(pageNumber, pageSize);
     }
-    //TODO: () fix this try-catch block: handle this ResponseStatusException correctly 
+     
     @GetMapping(path = "/{entryID}")
     public Student getStudentByID(@PathVariable("entryID") Long entryID){
         try {
             return studentService.getStudentByID(entryID);
-        } catch(ResponseStatusException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
-        }
-        
+        } catch(StudentNotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
+            		"I'm sorry, no student could be found for the given the id: "+entryID.toString(),ex);
+        }        
     }
 
     @PostMapping(path = "/")

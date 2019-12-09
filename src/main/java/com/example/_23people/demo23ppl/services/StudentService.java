@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,13 +36,14 @@ public class StudentService
         return page.getContent();
     }
 
-    public Student getStudentByID(Long entryID) throws ResponseStatusException {
+    public Student getStudentByID(Long entryID) throws StudentNotFoundException {
 
         Optional<Student> studentOptional = studentRepository.findById(entryID);
 
-        //if(!studentOptional.isPresent()) {
-        //    return ResponseEntity.notFound().build();
-        //}
+        if(!studentOptional.isPresent()) {
+            //return ResponseEntity.notFound().build();
+        	throw new StudentNotFoundException("Student not found in repo...");
+        }
         return studentOptional.get();
     }
 
@@ -71,7 +73,9 @@ public class StudentService
         Optional<Student> studentOptional = studentRepository.findById(id);
 
         if(!studentOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No student with ID "+ id.toString() 
+        		+" could be found to be deleted");
         }
         
         studentRepository.delete(studentRepository.findById(id).get());
