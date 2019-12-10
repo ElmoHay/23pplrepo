@@ -20,14 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("students/")
 public class StudentController
 {
-    // TODO:  
-    @Autowired
     private StudentService studentService;
+    
+    //for decoupling purposes (i.e allow testing) let class constructor takeover D.I.
+    @Autowired
+    public StudentController(StudentService studentService)
+    {
+        this.studentService = studentService;
+    }
 
     @RequestMapping(value="/hello", method=RequestMethod.GET)
     public String index()
@@ -37,39 +43,36 @@ public class StudentController
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Student> getAllStudents(){
-        return studentService.getAllStudents();
+        return studentService.getAll();
     }
 
-    
-    @GetMapping(path = "/paginated")
+    //TODO: Refactor arguments (use Pageable instead of parameters)
+    @GetMapping(path = "/")
     public @ResponseBody Iterable<Student> getAllStudentsPaginate(@RequestParam("pageNumber") Long pageNumber, 
     @RequestParam("pageSize") Long pageSize){
-        return studentService.getAllStudentsPaginate(pageNumber, pageSize);
+        return studentService.getAllPaginate(pageNumber, pageSize);
     }
      
     @GetMapping(path = "/{entryID}")
     public Student getStudentByID(@PathVariable("entryID") Long entryID){
-        try {
-            return studentService.getStudentByID(entryID);
-        } catch(StudentNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
-            		"I'm sorry, no student could be found for the given the id: "+entryID.toString(),ex);
-        }        
+        return studentService.getByID(entryID);
     }
 
     @PostMapping(path = "/")
     public ResponseEntity<Object> postStudent(@RequestBody Student student){
 
-        return studentService.createStudent(student);
+        return studentService.create(student);
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Object> putStudent (@RequestBody Student student, @PathVariable Long id){
-        return studentService.putTheStudent(student, id);
+        return studentService.put(student, id);
     }
 
+    //DONE: refactored
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Object> deleteStudent(@PathVariable Long id){
-        return studentService.DelTheStudent(id);
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteStudent(@PathVariable Long id){
+        studentService.delete(id);
     }
 }

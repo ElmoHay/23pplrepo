@@ -23,11 +23,11 @@ public class StudentService
     @Autowired
     StudentRepository studentRepository;
 
-    public Iterable<Student> getAllStudents(){
+    public Iterable<Student> getAll(){
         return studentRepository.findAll();
     }
 
-    public Iterable<Student> getAllStudentsPaginate(Long pageNumber, Long pageSize)
+    public Iterable<Student> getAllPaginate(Long pageNumber, Long pageSize)
     {
         Pageable pageable = PageRequest.of(pageNumber.intValue(), pageSize.intValue());
         Page<Student> page =  studentRepository.findAll(pageable);
@@ -35,19 +35,20 @@ public class StudentService
         // return studentRepository.findAll();
         return page.getContent();
     }
-
-    public Student getStudentByID(Long entryID) throws StudentNotFoundException {
+    //TO-DO: refactor
+    public Student getByID(Long entryID) throws StudentNotFoundException {
 
         Optional<Student> studentOptional = studentRepository.findById(entryID);
 
         if(!studentOptional.isPresent()) {
             //return ResponseEntity.notFound().build();
-        	throw new StudentNotFoundException("Student not found in repo...");
+            throw new StudentNotFoundException("I'm sorry, no student could be found "
+                +"for the given the id: " + entryID.toString());
         }
         return studentOptional.get();
     }
-
-    public ResponseEntity<Object> createStudent(Student student){
+    //TO-DO: refactor
+    public ResponseEntity<Object> create(Student student){
         Student studentSaved = studentRepository.save(student);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -55,8 +56,8 @@ public class StudentService
             
         return ResponseEntity.created(location).build();
     }
-
-    public ResponseEntity<Object> putTheStudent(Student student, Long id){
+    //TO-DO: refactor
+    public ResponseEntity<Object> put(Student student, Long id){
         Optional<Student> studentOptional = studentRepository.findById(id);
 
         if(!studentOptional.isPresent()) {
@@ -67,18 +68,19 @@ public class StudentService
         studentRepository.save(student);
         return ResponseEntity.ok().build();
     }
-
-    public ResponseEntity<Object> DelTheStudent(Long id)
+    
+    //TODO: commented lines to be used in post method and/or validation
+    public void delete(Long id)
     {
         Optional<Student> studentOptional = studentRepository.findById(id);
 
         if(!studentOptional.isPresent()) {
-            //return ResponseEntity.notFound().build();
-        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No student with ID "+ id.toString() 
-        		+" could be found to be deleted");
+        	throw new StudentNotFoundException("No student with ID "+ id.toString() 
+                +" could be found to be deleted");
+            // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A student with ID nº "+ id.toString()
+                // +" could not be found. Please provide a valid ID and try again");
         }
         
         studentRepository.delete(studentRepository.findById(id).get());
-        return ResponseEntity.ok().build();
     }
 }

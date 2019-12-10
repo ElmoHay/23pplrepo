@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface StudentRepo<T, ID> extends CrudRepository<T, ID>{
+public interface PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID>{
     Page<T> findAll(Pageable pageable);
 }

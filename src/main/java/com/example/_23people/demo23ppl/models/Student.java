@@ -11,16 +11,16 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String first_name;
-    private String last_name;
-    private String email;
+    private String FirstName;
+    private String LastName;
+    private String Email;
 
     private Student() {}
 
     public Student(String FirstName, String LastName, String EMail){
-        this.first_name=FirstName;
-        this.last_name=LastName;
-        this.email=EMail;
+        this.FirstName=FirstName;
+        this.LastName=LastName;
+        this.Email=EMail;
     }
 
     public Long getId(){
@@ -29,13 +29,13 @@ public class Student {
     public void setId(Long id){
         this.id=id;
     }
-    public String getFirst_name(){
-        return first_name;
+    public String getFirstName(){
+        return FirstName;
     }
-    public String getLast_name(){
-        return last_name;
+    public String getLastName(){
+        return LastName;
     }
     public String getEmail(){
-        return email;
+        return Email;
     }
 }
