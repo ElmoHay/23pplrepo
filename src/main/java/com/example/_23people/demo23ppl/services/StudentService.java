@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
+import com.example._23people.demo23ppl.repositories.StudentPagingAndSortingRepository;
 import com.example._23people.demo23ppl.repositories.StudentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,26 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Service
 public class StudentService
 {
-    @Autowired
+    
     StudentRepository studentRepository;
+    StudentPagingAndSortingRepository studentPagingandSortRepo;
+
+    @Autowired
+    StudentService(StudentRepository studentRepository, 
+                   StudentPagingAndSortingRepository studentPageandSortRepo){
+        this.studentRepository = studentRepository;
+        this.studentPagingandSortRepo = studentPageandSortRepo;
+    }
 
     public Iterable<Student> getAll(){
         return studentRepository.findAll();
     }
 
-    public Iterable<Student> getAllPaginate(Long pageNumber, Long pageSize)
+    public Iterable<Student> getAllPaginate(Integer pageNumber, Integer pageSize)
     {
-        Pageable pageable = PageRequest.of(pageNumber.intValue(), pageSize.intValue());
-        Page<Student> page =  studentRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Student> page =  studentPagingandSortRepo.findAll(pageable);
 
-        // return studentRepository.findAll();
         return page.getContent();
     }
     //TO-DO: refactor
@@ -41,7 +49,6 @@ public class StudentService
         Optional<Student> studentOptional = studentRepository.findById(entryID);
 
         if(!studentOptional.isPresent()) {
-            //return ResponseEntity.notFound().build();
             throw new StudentNotFoundException("I'm sorry, no student could be found "
                 +"for the given the id: " + entryID.toString());
         }

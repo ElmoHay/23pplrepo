@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
-@RequestMapping("students/")
+@RequestMapping("students")
 public class StudentController
 {
     private StudentService studentService;
@@ -46,10 +46,12 @@ public class StudentController
         return studentService.getAll();
     }
 
-    //TODO: Refactor arguments (use Pageable instead of parameters)
-    @GetMapping(path = "/")
-    public @ResponseBody Iterable<Student> getAllStudentsPaginate(@RequestParam("pageNumber") Long pageNumber, 
-    @RequestParam("pageSize") Long pageSize){
+    @GetMapping
+    public @ResponseBody Iterable<Student> getAllStudentsPaginate(
+        @RequestParam(defaultValue = "0") Integer pageNumber, 
+        @RequestParam(defaultValue = "10") Integer pageSize,
+        @RequestParam(defaultValue = "id") String sortBy) 
+    {
         return studentService.getAllPaginate(pageNumber, pageSize);
     }
      
