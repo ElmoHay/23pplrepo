@@ -4,10 +4,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example._23people.demo23ppl.services.StudentService;
+
+import javax.validation.Valid;
+
 import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +51,7 @@ public class StudentController
     }
 
     @GetMapping
-    public @ResponseBody Iterable<Student> getAllStudentsPaginate(
+    public @ResponseBody Page<Student> getAllStudentsPaginate(
         @RequestParam(defaultValue = "0") Integer pageNumber, 
         @RequestParam(defaultValue = "10") Integer pageSize,
         @RequestParam(defaultValue = "id") String sortBy) 
@@ -60,7 +64,7 @@ public class StudentController
         return studentService.getByID(entryID);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping
     public ResponseEntity<Object> postStudent(@RequestBody Student student){
 
         return studentService.create(student);

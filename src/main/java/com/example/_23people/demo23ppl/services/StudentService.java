@@ -36,12 +36,10 @@ public class StudentService
         return studentRepository.findAll();
     }
 
-    public Iterable<Student> getAllPaginate(Integer pageNumber, Integer pageSize)
+    public Page<Student> getAllPaginate(Integer pageNumber, Integer pageSize)
     {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Student> page =  studentPagingandSortRepo.findAll(pageable);
-
-        return page.getContent();
+        return studentPagingandSortRepo.findAll(pageable);
     }
     //TO-DO: refactor
     public Student getByID(Long entryID) throws StudentNotFoundException {

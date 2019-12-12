@@ -1,4 +1,4 @@
-INSERT INTO STUDENT (first_name, last_name, email) VALUES
+INSERT INTO STUDENT (firstname, lastname, email) VALUES
   ('Lokesh', 'Gupta', 'abc@gmail.com'),
   ('Deja', 'Vu', 'xyz@email.com'),
   ('Juan', 'Perez-Cruz', 'juan.perez-cruz@perezcruzvinos.cl'),

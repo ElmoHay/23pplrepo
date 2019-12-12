@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 
 @Entity
 public class Student {
@@ -11,31 +12,49 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String FirstName;
-    private String LastName;
-    private String Email;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     private Student() {}
 
-    public Student(String FirstName, String LastName, String EMail){
-        this.FirstName=FirstName;
-        this.LastName=LastName;
-        this.Email=EMail;
+    public Student(String firstName, String lastName, String email){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.email=email;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
-    public void setId(Long id){
-        this.id=id;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    public String getFirstName(){
-        return FirstName;
+
+    public String getfirstName() {
+        return firstName;
     }
-    public String getLastName(){
-        return LastName;
+
+    public void setfirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public String getEmail(){
-        return Email;
+
+    public String getlastName() {
+        return lastName;
     }
+
+    public void setlastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getemail() {
+        return email;
+    }
+
+    public void setemail(String email) {
+        this.email = email;
+    }
+
+  
 }
