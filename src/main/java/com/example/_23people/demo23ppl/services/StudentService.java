@@ -36,9 +36,8 @@ public class StudentService
         return studentRepository.findAll();
     }
 
-    public Page<Student> getAllPaginate(Integer pageNumber, Integer pageSize)
+    public Page<Student> getAllPaginate(Pageable pageable)
     {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return studentPagingandSortRepo.findAll(pageable);
     }
     //TO-DO: refactor

@@ -1,17 +1,13 @@
 package com.example._23people.demo23ppl.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example._23people.demo23ppl.services.StudentService;
-
-import javax.validation.Valid;
-
-import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -51,12 +46,9 @@ public class StudentController
     }
 
     @GetMapping
-    public @ResponseBody Page<Student> getAllStudentsPaginate(
-        @RequestParam(defaultValue = "0") Integer pageNumber, 
-        @RequestParam(defaultValue = "10") Integer pageSize,
-        @RequestParam(defaultValue = "id") String sortBy) 
+    public @ResponseBody Page<Student> getAllStudentsPaginate(Pageable pageable) 
     {
-        return studentService.getAllPaginate(pageNumber, pageSize);
+        return studentService.getAllPaginate(pageable);
     }
      
     @GetMapping(path = "/{entryID}")
