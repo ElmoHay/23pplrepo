@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Student {
@@ -12,8 +13,13 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min=2)
+    @Pattern(regexp ="^[A-Z][a-z]*" )
     private String firstname;
+    @Size(min=2)
+    @Pattern(regexp ="^[A-Z][a-z]*" )
     private String lastname;
+    @Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$")
     private String email;
 
     private Student() {}
