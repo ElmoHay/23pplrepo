@@ -13,10 +13,10 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min=2)
+    @Size(min=2, max = 15)
     @Pattern(regexp ="^[A-Z][a-z]*" )
     private String firstname;
-    @Size(min=2)
+    @Size(min=2, max = 20)
     @Pattern(regexp ="^[A-Z][a-z]*" )
     private String lastname;
     @Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$")
