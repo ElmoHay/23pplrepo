@@ -66,6 +66,7 @@ public class StudentService
     public ResponseEntity<Object> put(Student newStudent, Long id){
         Student updatedStudent = studentRepository.findById(id).
         map(student -> {
+            student.setRut(newStudent.getRut());
             student.setFirstname(newStudent.getFirstname());
             student.setLastname(newStudent.getLastname());
             student.setEmail(newStudent.getEmail());

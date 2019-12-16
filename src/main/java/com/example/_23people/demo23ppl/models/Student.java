@@ -7,12 +7,16 @@ import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.example._23people.demo23ppl.validators.RUTConstraint;
+
 @Entity
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @RUTConstraint
+    private String rut;
     @Size(min=2, max = 15)
     @Pattern(regexp ="^[A-Z][a-z]*" )
     private String firstname;
@@ -60,6 +64,14 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
     }
 
   
