@@ -1,19 +1,22 @@
-INSERT INTO STUDENT (firstname, lastname, email) VALUES
-  ('Lokesh', 'Gupta', 'abc@gmail.com'),
-  ('Deja', 'Vu', 'xyz@email.com'),
-  ('Juan', 'Perez-Cruz', 'juan.perez-cruz@perezcruzvinos.cl'),
-  ('Ivan', 'Araya', 'ivan.araya.t@email.com'),
-  ('Daniel', 'Barraza', 'dbarrazac@gmail.com'),
-  ('Tom', 'Araya', 'tomas.araya@slayer.com'),
-  ('Orlando', 'Sepúlveda', 'ojsepu@gmail.com'),
-  ('Francisco', 'González-Ceballos', 'fgonzalezc@gmail.com'),
-  ('Pablo', 'Parra', 'parra.pablo.r@mail.com'),
-  ('Alejandro', 'Barahona', 'abarahona@vision.co.cl'),
-  ('Jorge Alberto', 'Sierra Poscietti', 'asierra@visionmail.com.ar'),
-  ('Rodrigo', 'Olivos', 'rolivos@email.com'),
-  ('Enzo', 'Sierra', 'esierra@email.com'),
-  ('Antonio', 'Matras', 'amatras@email.com'),
-  ('Hernando', 'De Magallanes', 'hm@email.com'),
-  ('Pedro', 'De Valdivia', 'pdv@email.com'),
-  ('Manuel', 'Montt', 'm.montt@marvel.com'),
-  ('Caption', 'America', 'cap@marvel.com');
+INSERT INTO COURSE (name) VALUES
+('Math'), ('Arts'), ('Programming'), ('Science');
+
+INSERT INTO STUDENT (firstname, lastname, email, course_id) VALUES
+  ('Lokesh', 'Gupta', 'abc@gmail.com',1),
+  ('Deja', 'Vu', 'xyz@email.com',1),
+  ('Juan', 'Perez-Cruz', 'juan.perez-cruz@perezcruzvinos.cl',1),
+  ('Ivan', 'Araya', 'ivan.araya.t@email.com',3),
+  ('Daniel', 'Barraza', 'dbarrazac@gmail.com',3),
+  ('Tom', 'Araya', 'tomas.araya@slayer.com',2),
+  ('Orlando', 'Sepúlveda', 'ojsepu@gmail.com',3),
+  ('Francisco', 'González-Ceballos', 'fgonzalezc@gmail.com',3),
+  ('Pablo', 'Parra', 'parra.pablo.r@mail.com',1),
+  ('Alejandro', 'Barahona', 'abarahona@vision.co.cl',4),
+  ('Jorge Alberto', 'Sierra Poscietti', 'asierra@visionmail.com.ar',3),
+  ('Rodrigo', 'Olivos', 'rolivos@email.com',3),
+  ('Enzo', 'Sierra', 'esierra@email.com',2),
+  ('Antonio', 'Matras', 'amatras@email.com',2),
+  ('Hernando', 'De Magallanes', 'hm@email.com',2),
+  ('Pedro', 'De Valdivia', 'pdv@email.com',2),
+  ('Manuel', 'Montt', 'm.montt@marvel.com',2),
+  ('Caption', 'America', 'cap@marvel.com',2);

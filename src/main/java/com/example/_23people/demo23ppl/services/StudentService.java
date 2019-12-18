@@ -3,35 +3,25 @@ package com.example._23people.demo23ppl.services;
 import java.net.URI;
 import java.util.Optional;
 
-import javax.annotation.Resource;
 
 import com.example._23people.demo23ppl.exceptions.StudentNotFoundException;
 import com.example._23people.demo23ppl.models.Student;
-import com.example._23people.demo23ppl.repositories.StudentPagingAndSortingRepository;
 import com.example._23people.demo23ppl.repositories.StudentRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class StudentService
-{
-    
+{   
     StudentRepository studentRepository;
-    StudentPagingAndSortingRepository studentPagingandSortRepo;
 
     @Autowired
-    StudentService(StudentRepository studentRepository, 
-                   StudentPagingAndSortingRepository studentPageandSortRepo){
+    StudentService(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
-        this.studentPagingandSortRepo = studentPageandSortRepo;
     }
 
     public Iterable<Student> getAll(){
@@ -40,7 +30,7 @@ public class StudentService
 
     public Page<Student> getAllPaginate(Pageable pageable)
     {
-        return studentPagingandSortRepo.findAll(pageable);
+        return studentRepository.findAll(pageable);
     }
     //TO-DO: refactor
     public Student getByID(Long entryID) throws StudentNotFoundException {
@@ -82,7 +72,7 @@ public class StudentService
         ).build();
     }
     
-    //TODO: commented lines to be used in post method and/or validation
+    //commented lines: exception handling example to be used in course controller
     public void delete(Long id)
     {
         Optional<Student> studentOptional = studentRepository.findById(id);

@@ -4,9 +4,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.example._23people.demo23ppl.models.*;
 
-public interface StudentRepository extends PagingAndSortingRepository<Student, Long>
+public interface CourseRepository extends PagingAndSortingRepository<Course, Long>
 {
     //PagingAndSortingRepository also extends from CrudRepository
-    //List<Student> findByLast_name(String last_name);
-    //Student findById(Long id);
+    //List<Course> findByLast_name(String last_name);
+    //Course findById(Long id);
 }

@@ -3,8 +3,10 @@ package com.example._23people.demo23ppl.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "")
 public class Course
 {
     @Id

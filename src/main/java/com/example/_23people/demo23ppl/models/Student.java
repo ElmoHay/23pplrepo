@@ -1,15 +1,20 @@
 package com.example._23people.demo23ppl.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.example._23people.demo23ppl.validators.RUTConstraint;
 
 @Entity
+@Table(name = "STUDENT")
 public class Student {
 
     @Id
@@ -26,6 +31,10 @@ public class Student {
     @Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$")
     private String email;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private Course course;
+    
     private Student() {}
 
     public Student(String firstName, String lastName, String email){
@@ -72,6 +81,14 @@ public class Student {
 
     public void setRut(String rut) {
         this.rut = rut;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
   
