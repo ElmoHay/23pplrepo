@@ -40,9 +40,9 @@ public class StudentController
         return "Hi!";
     }
 
-    @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Student> getAllStudents(){
-        return studentService.getAll();
+    @GetMapping(path = "course/{courseId}/students")
+    public @ResponseBody Iterable<Student> getAllStudents(@PathVariable Long courseId){
+        return studentService.getAllCoursesOfStudent(courseId);
     }
 
     @GetMapping

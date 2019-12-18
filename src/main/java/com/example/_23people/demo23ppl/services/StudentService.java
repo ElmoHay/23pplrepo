@@ -24,15 +24,15 @@ public class StudentService
         this.studentRepository = studentRepository;
     }
 
-    public Iterable<Student> getAll(){
-        return studentRepository.findAll();
+    public Iterable<Student> getAllCoursesOfStudent(Long courseId){
+        return studentRepository.findByCourseId(courseId);
     }
 
     public Page<Student> getAllPaginate(Pageable pageable)
     {
         return studentRepository.findAll(pageable);
     }
-    //TO-DO: refactor
+    
     public Student getByID(Long entryID) throws StudentNotFoundException {
 
         Optional<Student> studentOptional = studentRepository.findById(entryID);
