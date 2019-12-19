@@ -32,7 +32,7 @@ public class Student {
     @Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$")
     private String email;
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id")
     private Course course;

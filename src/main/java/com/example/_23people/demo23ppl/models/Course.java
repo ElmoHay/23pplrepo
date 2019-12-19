@@ -25,9 +25,10 @@ public class Course
     @Column(name = "name")
     String name;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL})
-    private List<Student> students;
+    //@JsonManagedReference
+    //@OneToMany(mappedBy = "course", cascade = {CascadeType.ALL})
+    //private List<Student> students;
+    //asdg
 
     public Long getId() {
         return id;
@@ -45,12 +46,12 @@ public class Course
         this.name = name;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
+    // public List<Student> getStudents() {
+    //     return students;
+    // }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
+    // public void setStudents(List<Student> students) {
+    //     this.students = students;
+    // }
     
 }
