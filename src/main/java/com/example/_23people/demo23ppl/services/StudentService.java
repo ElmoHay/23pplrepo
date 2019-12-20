@@ -24,6 +24,11 @@ public class StudentService
         this.studentRepository = studentRepository;
     }
 
+    public Iterable<Student> getAllStudents()
+    {
+        return studentRepository.findAll();
+    }
+
     public Iterable<Student> getAllCoursesOfStudent(Long courseId){
         return studentRepository.findByCourseId(courseId);
     }

@@ -50,6 +50,12 @@ public class StudentController
     {
         return studentService.getAllPaginate(pageable);
     }
+
+    @GetMapping(path = "all")
+    public @ResponseBody Iterable<Student> getAll()
+    {
+        return studentService.getAllStudents();
+    }
      
     @GetMapping(path = "/{entryID}")
     public Student getStudentByID(@PathVariable("entryID") Long entryID){
