@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: courses-service    
+    cloud:
+        uri: http://localhost:8888  #where the config-service is running
+        fail-fast: true

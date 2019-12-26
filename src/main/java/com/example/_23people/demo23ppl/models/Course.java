@@ -26,7 +26,7 @@ public class Course
     String name;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST})
     private List<Student> students;
 
     public Long getId() {

@@ -33,7 +33,7 @@ public class Student {
     private String email;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "course_id")
     private Course course;
     
