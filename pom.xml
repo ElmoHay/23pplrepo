@@ -67,7 +67,12 @@
         <dependency>
           <groupId>org.springframework.cloud</groupId>
           <artifactId>spring-cloud-netflix-eureka-server</artifactId>
-        </dependency>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1212</version>
+		</dependency>
 	</dependencies>
 
 	<build>
