@@ -3,6 +3,8 @@ package com.example._23people.demo23ppl.controllers;
 import com.example._23people.demo23ppl.models.Course;
 import com.example._23people.demo23ppl.services.CourseService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,4 +64,15 @@ public class CourseController
     public void delete(@PathVariable Long id) throws ResponseStatusException{
         courseService.deleteCourse(id);
     }
+    
+    @GetMapping(path = "/sp")
+    public @ResponseBody List<?> getAllCoursesSP(){
+    	return courseService.callStoredProc();
+    }
+    @GetMapping(path = "/sp2")
+    public @ResponseBody List<Object[]> getAllCoursesSPTable()
+    {
+    	return courseService.getRecordsFromFunction();
+    }
 }
+    

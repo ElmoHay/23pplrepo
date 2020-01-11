@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,10 +19,18 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "COURSE")
+@NamedStoredProcedureQuery(
+		name = "getcourses", 
+		procedureName = "fngetcourses",
+		resultClasses = Course.class,
+		parameters = {
+				@StoredProcedureParameter(type = void.class,mode = ParameterMode.REF_CURSOR)
+		}
+	)
 public class Course
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
     @Column(name = "name")

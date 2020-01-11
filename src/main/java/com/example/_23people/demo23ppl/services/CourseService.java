@@ -1,27 +1,41 @@
 package com.example._23people.demo23ppl.services;
 
 import java.net.URI;
+import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 
 import com.example._23people.demo23ppl.models.Course;
 import com.example._23people.demo23ppl.repositories.CourseRepository;
 
+import org.hibernate.Session;
+import org.hibernate.procedure.ProcedureCall;
+import org.hibernate.result.Output;
+import org.hibernate.result.ResultSetOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class CourseService{
     CourseRepository courseRepository;
+    EntityManager em;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository){
+    public CourseService(CourseRepository courseRepository, EntityManager entityManager){
         this.courseRepository=courseRepository;
+        this.em=entityManager;
     }
 
     public Iterable<Course> getAll()
@@ -76,5 +90,32 @@ public class CourseService{
                 +" could not be found. Please provide a valid ID and try again");
         }
         courseRepository.delete(courseOptional.get());
+    }
+    
+    // required to allow jpa to retrieve the pgcursor before committing transaction
+    @Transactional 
+    public List<Course> callStoredProc()
+    {
+    	//Session session = em.unwrap(Session.class);
+    	//session.doWork(connection -> { connection.setAutoCommit(false); });    	
+    	
+    	List <Course> courses = (List<Course>) this.em.createNamedStoredProcedureQuery("getcourses").getResultList();
+    	return courses;
+    }
+    
+    // hibernate way to call, using ProcedureCall (pgplsql function returns RECORD - TABLE)
+    public List<Object[]> getRecordsFromFunction()
+    {
+    	Session session = em.unwrap(Session.class);
+    	List<Object[]> resultado = null;
+
+    	ProcedureCall call = session.createStoredProcedureCall("fnselcourse");
+    	//call.registerParameter(1,void.class,ParameterMode.REF_CURSOR); 
+    	Output output = call.getOutputs().getCurrent();
+
+    	if (output.isResultSet()) { 
+    		resultado = ((ResultSetOutput)output).getResultList(); 
+    	}
+    	return resultado;
     }
 }
